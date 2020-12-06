@@ -67,7 +67,7 @@ class Product(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("catalog:product", args=[str(self.slug)])
+        return reverse("catalog:product_detail", args=[str(self.slug)])
 
     def sale_price(self):
         if self.old_price > self.price:
