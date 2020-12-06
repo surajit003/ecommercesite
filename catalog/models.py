@@ -73,7 +73,7 @@ class Product(TimeStampedModel):
         if self.old_price > self.price:
             return self.price
         else:
-            return None
+            return self.old_price
 
 
 class ProductImage(TimeStampedModel):

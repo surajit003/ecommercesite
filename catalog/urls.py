@@ -9,4 +9,9 @@ urlpatterns = [
         views.ProductDetail.as_view(),
         name="product_detail",
     ),
+    url(
+        r"^category/(?P<slug>[\w-]+)$",
+        views.CategoryDetail.as_view(),
+        name="category_detail",
+    ),
 ]
