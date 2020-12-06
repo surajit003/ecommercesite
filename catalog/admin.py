@@ -3,6 +3,10 @@ from django import forms
 from .models import Product, ProductImage, Category
 
 
+class ProductImagesInline(admin.StackedInline):
+    model = ProductImage
+
+
 class ProductAdminForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -40,6 +44,7 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display_links = ("name",)
     list_per_page = 20
+    inlines = [ProductImagesInline]
 
 
 @admin.register(ProductImage)
