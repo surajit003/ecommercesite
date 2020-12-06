@@ -77,13 +77,18 @@ class Product(TimeStampedModel):
 
 
 class ProductImage(TimeStampedModel):
+    category = [
+        ("thumbnail", "thumbnail"),
+        ("other", "other"),
+    ]
     product = models.ForeignKey(
         Product, related_name="images", on_delete=models.CASCADE
     )
     image = models.ImageField()
+    img_category = models.CharField(max_length=20, choices=category, default="other")
 
     def __str__(self):
-        return self.product.name
+        return "{} {}".format(self.product.name, self.img_category)
 
     class Meta:
         db_table = "product_images"
