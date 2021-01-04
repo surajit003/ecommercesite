@@ -33,6 +33,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "admin_interface",
     "colorfield",
     "django.contrib.admin",
@@ -45,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.flatpages",
     "catalog",
     "common",
+    "cart",
 ]
 
 MIDDLEWARE = [
@@ -147,3 +151,36 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
 SITE_ID = 1
+
+SESSION_COOKIE_NAME = "sessionid"
+# The module to store sessions data.
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+# Age of cookie, in seconds (default: 2 weeks).
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
+# Whether a user's session cookie expires when the Web browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# Whether the session cookie should be secure (https:// only).
+SESSION_COOKIE_SECURE = False
+RABBITMQ_BROKER_URL = config("BROKER_URL")
+RABBITMQ_USERNAME = config("BROKER_USERNAME")
+RABBITMQ_PASSWORD = config("BROKER_PASSWORD")
+RABBITMQ_PORT = config("BROKER_PORT", default="5672")
+RABBITMQ_VHOST = config("BROKER_VHOST", default="pbp_main")
+CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND")
+CELERY_WHISTLE_VHOST = config("CELERY_WHISTLE_VHOST")
+CELERY_BROKER_URL = (
+    f"pyamqp://{RABBITMQ_USERNAME}:{RABBITMQ_PASSWORD}@"
+    f"{RABBITMQ_BROKER_URL}/{CELERY_WHISTLE_VHOST}"
+)
+
+BROKER_URL = (
+    f"pyamqp://{RABBITMQ_USERNAME}:{RABBITMQ_PASSWORD}@"
+    f"{RABBITMQ_BROKER_URL}/{RABBITMQ_VHOST}"
+)
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+]

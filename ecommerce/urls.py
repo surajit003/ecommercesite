@@ -24,6 +24,8 @@ app_name = "ecommerce"
 main = [
     url(r"^admin/", admin.site.urls),
     url(r"^catalog/", include("catalog.urls")),
+    url(r"^cart/", include("cart.urls")),
+    url(r"^accounts/", include("allauth.urls")),
     url(r"^__debug__/", include(debug_toolbar.urls)),
 ]
 
