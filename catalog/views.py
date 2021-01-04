@@ -1,8 +1,12 @@
-from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from .models import Product, Category
 
 # Create your views here.
+
+
+class ProductList(ListView):
+    model = Product
+    template_name = "catalog/item_list.html"
 
 
 class ProductDetail(DetailView):

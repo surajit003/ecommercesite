@@ -23,3 +23,11 @@ class TestCategoryView:
         request = RequestFactory().get(path)
         response = views.CategoryDetail.as_view()(request, slug=obj.slug)
         assert response.status_code == 200, "Should return 200"
+
+
+class TestProductList:
+    def test_product_list(self):
+        path = reverse("catalog:product_list")
+        request = RequestFactory().get(path)
+        response = views.ProductList.as_view()(request)
+        assert response.status_code == 200, "Should return 200"

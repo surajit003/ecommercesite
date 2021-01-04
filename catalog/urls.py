@@ -14,4 +14,9 @@ urlpatterns = [
         views.CategoryDetail.as_view(),
         name="category_detail",
     ),
+    url(
+        r"^product/list/$",
+        views.ProductList.as_view(),
+        name="product_list",
+    ),
 ]

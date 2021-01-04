@@ -1,0 +1,10 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+{% for item in product_list %}
+    <ul>
+    <li>
+        {{ item.name }}
+    </li>
+    </ul>
+    {% endfor %}
+{% endblock content %}
