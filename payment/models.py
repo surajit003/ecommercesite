@@ -11,6 +11,7 @@ class Payment(models.Model):
     )
     amount = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    receipt_url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.user.username
