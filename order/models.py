@@ -2,7 +2,8 @@ from cart.models import CartItem
 from django.conf import settings
 from common.models import TimeStampedModel
 from django.db import models
-
+from checkout.models import Address
+from payment.models import Payment
 
 # Create your models here.
 class Order(TimeStampedModel):
@@ -11,6 +12,23 @@ class Order(TimeStampedModel):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
+    shipping_address = models.ForeignKey(
+        Address,
+        related_name="shipping_address",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    billing_address = models.ForeignKey(
+        Address,
+        related_name="billing_address",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    payment = models.ForeignKey(
+        Payment, on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     class Meta:
         verbose_name_plural = "OrderItems"

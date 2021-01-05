@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib import messages
 
 
+@login_required
 def add_to_cart(request, slug):
     product = get_object_or_404(Product, slug=slug)
     cart_item, created = CartItem.objects.get_or_create(
@@ -30,18 +31,17 @@ def add_to_cart(request, slug):
     return redirect("catalog:product_detail", slug=slug)
 
 
+@login_required
 def remove_from_cart(request, slug):
-    print("entered")
     product = get_object_or_404(Product, slug=slug)
     cart_item = CartItem.objects.filter(
         product=product, user=request.user, ordered=False
-    )[0]
+    )
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        print("or", order)
+        cart_item = cart_item[0]
         if order.cart_item.filter(product__slug=product.slug):
-            print("got here")
             order.cart_item.remove(cart_item)
             messages.info(request, "This Item was removed from your cart")
             return redirect("catalog:product_detail", slug=slug)
