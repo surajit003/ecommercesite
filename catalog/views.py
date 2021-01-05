@@ -1,5 +1,6 @@
 from django.views.generic import DetailView, ListView
 from .models import Product, Category
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -16,10 +17,11 @@ class CategoryDetailView(DetailView):
         return context
 
 
-class ProductList(ListView):
+class ProductList(LoginRequiredMixin, ListView):
     model = Product
     paginate_by = 10
     template_name = "catalog/home.html"
+    login_url = "/ecommerce/accounts/login"
 
     def get_context_data(self, **kwargs):
         context = super(ProductList, self).get_context_data(**kwargs)
