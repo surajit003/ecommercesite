@@ -95,6 +95,12 @@ class Product(TimeStampedModel):
         thumbnail = product_image.image.url
         return thumbnail
 
+    def get_images(self):
+        product_image = ProductImage.objects.filter(
+            product=self.id, img_category="other"
+        )[:3]
+        return product_image
+
 
 class ProductImage(TimeStampedModel):
     category = [
