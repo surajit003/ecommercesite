@@ -26,6 +26,7 @@ main = [
     url(r"^catalog/", include("catalog.urls")),
     url(r"^cart/", include("cart.urls")),
     url(r"^order/", include("order.urls")),
+    url(r"^checkout/", include("checkout.urls")),
     url(r"^accounts/", include("allauth.urls")),
     url(r"^__debug__/", include(debug_toolbar.urls)),
 ]
