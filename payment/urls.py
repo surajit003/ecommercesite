@@ -7,5 +7,5 @@ urlpatterns = [
         r"^pay/(?P<payment_option>[\w-]+)/$",
         views.PaymentView.as_view(),
         name="payment",
-    ),
+    )
 ]

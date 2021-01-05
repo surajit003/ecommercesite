@@ -83,13 +83,13 @@ class PaymentView(View):
                     charge = stripe.Charge.create(
                         amount=amount, currency="usd", source=token  # cents
                     )
-                    print("charge", charge)
 
                 # create the payment
                 payment = Payment()
                 payment.stripe_charge_id = charge["id"]
                 payment.user = self.request.user
                 payment.amount = order.get_total()
+                payment.receipt_url = charge["receipt_url"]
                 payment.save()
 
                 # assign the payment to the order
@@ -105,7 +105,7 @@ class PaymentView(View):
                 order.save()
 
                 messages.success(self.request, "Your order was successful!")
-                return redirect("catalog:product_list")
+                return redirect(charge["receipt_url"])
 
             except stripe.error.CardError as e:
                 body = e.json_body
