@@ -9,10 +9,20 @@ class ProductList(ListView):
     paginate_by = 10
     template_name = "catalog/home.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductList, self).get_context_data(**kwargs)
+        context["category"] = Category.objects.all()
+        return context
+
 
 class ProductDetail(DetailView):
     model = Product
     template_name = "catalog/product.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetail, self).get_context_data(**kwargs)
+        context["category"] = Category.objects.all()
+        return context
 
 
 class CategoryList(ListView):
