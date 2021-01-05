@@ -11,7 +11,7 @@ urlpatterns = [
     ),
     url(
         r"^category/(?P<slug>[\w-]+)$",
-        views.CategoryDetail.as_view(),
+        views.CategoryDetailView.as_view(),
         name="category_detail",
     ),
     url(
