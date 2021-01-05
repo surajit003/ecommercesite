@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.flatpages",
     "django_countries",
     "crispy_forms",
+    "user.apps.AccountConfig",
     "catalog",
     "common",
     "cart",
@@ -192,3 +193,5 @@ AUTHENTICATION_BACKENDS = [
 X_FRAME_OPTIONS = "ALLOWALL"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 LOGIN_REDIRECT_URL = "/ecommerce/catalog/product/list/"
+STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
+STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY")

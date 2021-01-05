@@ -28,6 +28,7 @@ main = [
     url(r"^order/", include("order.urls")),
     url(r"^checkout/", include("checkout.urls")),
     url(r"^accounts/", include("allauth.urls")),
+    url(r"^payment/", include("payment.urls")),
     url(r"^__debug__/", include(debug_toolbar.urls)),
 ]
 
