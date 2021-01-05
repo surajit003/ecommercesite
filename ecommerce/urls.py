@@ -25,12 +25,15 @@ main = [
     url(r"^admin/", admin.site.urls),
     url(r"^catalog/", include("catalog.urls")),
     url(r"^cart/", include("cart.urls")),
+    url(r"^order/", include("order.urls")),
     url(r"^accounts/", include("allauth.urls")),
     url(r"^__debug__/", include(debug_toolbar.urls)),
 ]
 
-urlpatterns = [url(r"^ecommerce/", include(main))] + static(
-    settings.STATIC_URL, document_root=settings.STATIC_ROOT
+urlpatterns = (
+    [url(r"^ecommerce/", include(main))]
+    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
 
 admin.site.site_header = "Ecommerce Admin"

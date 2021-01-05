@@ -1,6 +1,7 @@
 from django.urls import reverse
 from common.models import TimeStampedModel
 from django.db import models
+from django_resized import ResizedImageField
 
 
 class Category(TimeStampedModel):
@@ -69,11 +70,30 @@ class Product(TimeStampedModel):
     def get_absolute_url(self):
         return reverse("catalog:product_detail", args=[str(self.slug)])
 
+    def get_add_to_cart_url(self):
+        return reverse("cart:add_to_cart", args=[str(self.slug)])
+
+    def get_remove_from_cart_url(self):
+        return reverse("cart:remove_from_cart", args=[str(self.slug)])
+
     def sale_price(self):
         if self.old_price > self.price:
             return self.price
         else:
             return self.old_price
+
+    def get_categories(self):
+        categories = []
+        for category in self.categories.all():
+            categories.append(category)
+        return categories
+
+    def get_thumbnail(self):
+        product_image = ProductImage.objects.get(
+            product=self.id, img_category="thumbnail"
+        )
+        thumbnail = product_image.image.url
+        return thumbnail
 
 
 class ProductImage(TimeStampedModel):
@@ -84,7 +104,7 @@ class ProductImage(TimeStampedModel):
     product = models.ForeignKey(
         Product, related_name="images", on_delete=models.CASCADE
     )
-    image = models.ImageField()
+    image = ResizedImageField(size=[120, 120], quality=75)
     img_category = models.CharField(max_length=20, choices=category, default="other")
 
     def __str__(self):

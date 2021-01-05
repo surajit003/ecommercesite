@@ -13,8 +13,18 @@ class Order(TimeStampedModel):
     ordered = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name_plural = "CartItems"
-        verbose_name = "CartItem"
+        verbose_name_plural = "OrderItems"
+        verbose_name = "OrderItem"
 
     def __str__(self):
         return "{}".format(self.user.username)
+
+    def get_total(self):
+        total = 0
+        for order_item in self.cart_item.all():
+            print("i", order_item.get_final_price(), order_item.product.name)
+            total += order_item.get_final_price()
+        # if self.coupon:
+        #     total -= self.coupon.amount
+        print("tota", total)
+        return total
