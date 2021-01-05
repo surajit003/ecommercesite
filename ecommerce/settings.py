@@ -195,3 +195,4 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 LOGIN_REDIRECT_URL = "/ecommerce/catalog/product/list/"
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
 STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY")
+ACCOUNT_LOGOUT_REDIRECT_URL = "/ecommerce/accounts/login/"
