@@ -43,6 +43,7 @@ def remove_from_cart(request, slug):
         cart_item = cart_item[0]
         if order.cart_item.filter(product__slug=product.slug):
             order.cart_item.remove(cart_item)
+            cart_item.delete()
             messages.info(request, "This Item was removed from your cart")
             return redirect("catalog:product_detail", slug=slug)
         else:
