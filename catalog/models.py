@@ -22,6 +22,7 @@ class Category(TimeStampedModel):
     meta_description = models.CharField(
         "Meta Description", max_length=255, help_text="Content for description meta tag"
     )
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "categories"
@@ -60,7 +61,7 @@ class Product(TimeStampedModel):
         max_length=255, help_text="Content for description meta tag"
     )
     categories = models.ManyToManyField(Category)
-    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "products"

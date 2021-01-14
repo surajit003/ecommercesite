@@ -6,9 +6,11 @@ from .models import UserProfile, Company
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "name",
         "active",
     )
+    prepopulated_fields = {"slug": ("name",)}
 
 
 @admin.register(UserProfile)

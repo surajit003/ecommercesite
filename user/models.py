@@ -6,7 +6,7 @@ import uuid
 
 # Create your models here.
 class Company(models.Model):
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, unique=True, db_index=True)
     slug = models.SlugField(
         max_length=50,
         unique=True,
@@ -16,6 +16,9 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Companies"
 
 
 class UserProfile(models.Model):
