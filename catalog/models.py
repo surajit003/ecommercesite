@@ -2,6 +2,7 @@ from django.urls import reverse
 from common.models import TimeStampedModel
 from django.db import models
 from django_resized import ResizedImageField
+from django.conf import settings
 
 
 class Category(TimeStampedModel):
@@ -59,6 +60,7 @@ class Product(TimeStampedModel):
         max_length=255, help_text="Content for description meta tag"
     )
     categories = models.ManyToManyField(Category)
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "products"
