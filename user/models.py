@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+import uuid
+
 
 # Create your models here.
 class Company(models.Model):
@@ -21,6 +23,7 @@ class UserProfile(models.Model):
         ("BU", "Buyer"),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    profile_id = models.UUIDField(max_length=255, default=uuid.uuid4, db_index=True)
     stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
     one_click_purchasing = models.BooleanField(default=False)
     company = models.ForeignKey(
