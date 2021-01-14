@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from phonenumber_field.modelfields import PhoneNumberField
 import uuid
 
 
@@ -30,6 +31,7 @@ class UserProfile(models.Model):
         Company, on_delete=models.CASCADE, null=True, blank=True
     )
     role = models.CharField(max_length=30, choices=role_type, default="VE")
+    phone_number = PhoneNumberField(null=True, blank=True)
 
     def __str__(self):
         return self.user.username

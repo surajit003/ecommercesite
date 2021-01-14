@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.flatpages",
     "django_countries",
+    "phonenumber_field",
     "crispy_forms",
     "user.apps.AccountConfig",
     "catalog",
