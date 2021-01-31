@@ -55,6 +55,7 @@ class Vendor(models.Model):
 class VendorConfirmationCode(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     confirmation_code = models.CharField(max_length=220, db_index=True, unique=True)
+    valid = models.BooleanField(default=False)
 
     def __str__(self):
         return "{}-{}".format(self.vendor, self.confirmation_code)

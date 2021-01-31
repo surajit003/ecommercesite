@@ -6,6 +6,7 @@ from catalog.models import Category
 from allauth.account.views import SignupView
 from vendor.models import VendorConfirmationCode
 
+
 # Create your views here.
 def ProfileView(request, profile_id):
     if request.method == "GET":
@@ -58,9 +59,11 @@ class AccountSignupView(SignupView):
     def form_valid(self, form):
         if self.kwargs.get("confirmation_token"):
             try:
-                VendorConfirmationCode.objects.get(
-                    confirmation_code=self.kwargs.get("confirmation_token")
+                vendor_code = VendorConfirmationCode.objects.get(
+                    confirmation_code=self.kwargs.get("confirmation_token"), valid=False
                 )
+                vendor_code.valid = True
+                vendor_code.save()
                 return super(AccountSignupView, self).form_valid(form)
             except VendorConfirmationCode.DoesNotExist:
                 return redirect(
