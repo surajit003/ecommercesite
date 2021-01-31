@@ -1,0 +1,59 @@
+{% extends "catalog/core/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+
+    <main class="mt-5 pt-4">
+        <div class="container dark-grey-text mt-5">
+
+            <!--Grid row-->
+            <div class="row wow fadeIn">
+                <h1>{% trans "Vendor Details" %}</h1>
+                <!--Grid column-->
+                <div class="col-md-3 mb-4">
+                </div>
+                <div class="col-md-5 mb-4">
+
+                    <!--Content-->
+                    <div class="p-4">
+                        <p class="lead font-weight-bold">First Name</p>
+                        <p>{{ object.first_name }}</p>
+                        <p class="lead font-weight-bold">Last Name</p>
+                        <p>{{ object.last_name }}</p>
+                        <p class="lead font-weight-bold">Company</p>
+                        <p>{{ object.company }}</p>
+                        <p class="lead font-weight-bold">Contact Number</p>
+                        <p>{{ object.mobile_number }}</p>
+                        <p class="lead font-weight-bold">Email</p>
+                        <p>{{ object.email }}</p>
+                        <p class="lead font-weight-bold">Instagram</p>
+                        <p>{{ object.instagram }}</p>
+                        <p class="lead font-weight-bold">Business Type</p>
+                        <p>{{ object.business_type }}</p>
+                        <p class="lead font-weight-bold">Business Objectives</p>
+                        <p>{{ object.business_objectives }}</p>
+                        <p class="lead font-weight-bold">Instagram</p>
+                        <p>{{ object.instagram }}</p>
+                        <p class="lead font-weight-bold">Products</p>
+                        <p>{{ object.products }}</p>
+                        <a class="btn btn-default"
+                       href="{% url 'account_reset_password' %}">{% trans "Approve" %}</a>
+                    <button class="btn btn-primary" type="submit">{% trans "Reject" %}</button>
+                    </div>
+                    <!--Content-->
+
+                </div>
+                <!--Grid column-->
+                <div class="col-md-4 mb-4">
+                </div>
+
+            </div>
+            <!--Grid row-->
+
+            <hr>
+
+        </div>
+    </main>
+
+{% endblock content %}

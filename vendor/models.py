@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django.urls import reverse
 
 # Create your models here.
 
@@ -23,5 +24,13 @@ class Vendor(models.Model):
         verbose_name_plural = "Vendors"
         unique_together = ("first_name", "last_name", "company")
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = "{}-{}".format(self.first_name.lower(), self.last_name.lower())
+        return super(Vendor, self).save(*args, **kwargs)
+
     def __str__(self):
         return "{}-{}".format(self.first_name, self.last_name)
+
+    def get_absolute_url(self):
+        return reverse("event:event_detail", args=[str(self.slug)])
