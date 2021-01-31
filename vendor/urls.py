@@ -12,4 +12,9 @@ urlpatterns = [
         views.VendorDetail.as_view(),
         name="vendor_detail",
     ),
+    url(
+        r"^status/change-status/$",
+        views.change_status_of_vendor,
+        name="change-status",
+    ),
 ]

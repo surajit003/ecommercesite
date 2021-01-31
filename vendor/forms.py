@@ -8,4 +8,5 @@ class VendorForm(forms.ModelForm):
         exclude = (
             "slug",
             "active",
+            "admin_checked",
         )

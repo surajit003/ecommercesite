@@ -17,7 +17,10 @@
 
                     <!--Content-->
                     <div class="p-4">
-                        <p class="lead font-weight-bold">First Name</p>
+                        <form>
+                            {% csrf_token %}
+                            <p class="lead font-weight-bold">First Name</p>
+                            <input type="hidden" value="{{ object.id }}" id="vendor_id">
                         <p>{{ object.first_name }}</p>
                         <p class="lead font-weight-bold">Last Name</p>
                         <p>{{ object.last_name }}</p>
@@ -37,9 +40,9 @@
                         <p>{{ object.instagram }}</p>
                         <p class="lead font-weight-bold">Products</p>
                         <p>{{ object.products }}</p>
-                        <a class="btn btn-default"
-                       href="{% url 'account_reset_password' %}">{% trans "Approve" %}</a>
-                    <button class="btn btn-primary" type="submit">{% trans "Reject" %}</button>
+                        <button class="btn btn-default" id="approve" type="submit">{% trans "Approve" %}</button>
+                    <button class="btn btn-primary" id="reject" type="submit">{% trans "Reject" %}</button>
+                        </form>
                     </div>
                     <!--Content-->
 
@@ -55,5 +58,4 @@
 
         </div>
     </main>
-
 {% endblock content %}

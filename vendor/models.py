@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.urls import reverse
+from django.conf import settings
 
 # Create your models here.
 
@@ -18,6 +19,10 @@ class Vendor(models.Model):
     business_type = models.TextField()
     business_objectives = models.TextField()
     active = models.BooleanField(default=False)
+    admin_checked = models.BooleanField(default=False)
+    reviewed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.PROTECT
+    )
 
     class Meta:
         verbose_name = "Vendor"
