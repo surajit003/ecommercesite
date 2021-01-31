@@ -1,56 +1,58 @@
 {% extends "catalog/core/base.html" %}
 
 {% block content %}
-  <main>
-    <div class="container">
+    <main>
+        <div class="container">
 
-    <div class="table-responsive text-nowrap">
-    <h2>Vendor List</h2>
-    <form>
-        {% csrf_token %}
-    <table id="summary" class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">FirstName</th>
-            <th scope="col">LastName</th>
-            <th scope="col">Company</th>
-            <th scope="col">ContactNumber</th>
-            <th scope="col">View</th>
+            <div class="table-responsive text-nowrap">
+                <h2>Vendor List</h2>
+                <form>
+                    {% csrf_token %}
 
-        </tr>
-        </thead>
-        <tbody>
-        {% for vendor in vendor_list %}
-        <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td><input type="hidden" value="{{ vendor.id }}" id="vendor_obj_id_{{ vendor.id }}"></td>
-            <td>{{ vendor.first_name }}</td>
-            <td>{{ vendor.last_name }}</td>
-            <td>{{ vendor.company }}</td>
-            <td>{{ vendor.mobile_number }}</td>
-            <td>
-                <a href="{% url 'vendor:vendor_detail' vendor.slug %}"> <span class="badge badge-primary">View more</span> </a>
-            </td>
-            {% ifequal vendor.current_status 'taken' %}
-         <td>
-                <button id="assign_btn" type="submit" class="btn btn-green"> Assigned to {{ vendor.reviewed_by }}</button>
-            </td>
-        {% else %}
-          <td>
-                <a href="" class="btn btn-secondary"> Open </a>
-            </td>
-        {% endifequal %}
+                    <table id="summary" class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Company</th>
+                            <th scope="col">ContactNumber</th>
+                            <th scope="col">View</th>
 
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </form>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for vendor in vendor_list %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ vendor.first_name }}</td>
+                                <td>{{ vendor.last_name }}</td>
+                                <td>{{ vendor.company }}</td>
+                                <td>{{ vendor.mobile_number }}</td>
+                                <td>
+                                    <a href="{% url 'vendor:vendor_detail' vendor.slug %}"> <span
+                                            class="badge badge-primary">View more</span> </a>
+                                </td>
+                                {% ifequal vendor.current_status 'taken' %}
+                                    <td>
+                                        <button id="assign_btn" type="submit" class="btn btn-green"> Assigned
+                                            to {{ vendor.reviewed_by }}</button>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <a href="" class="btn btn-secondary"> Open </a>
+                                    </td>
+                                {% endifequal %}
 
-    </div>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
 
-    </div>
-  </main>
+            </div>
+
+        </div>
+    </main>
 
 {% endblock content %}

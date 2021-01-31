@@ -19,8 +19,8 @@
                     <div class="p-4">
                         <form>
                             {% csrf_token %}
-                            <p class="lead font-weight-bold">First Name</p>
                             <input type="hidden" value="{{ object.id }}" id="vendor_id">
+                            <p class="lead font-weight-bold">First Name</p>
                             <p>{{ object.first_name }}</p>
                             <p class="lead font-weight-bold">Last Name</p>
                             <p>{{ object.last_name }}</p>
@@ -40,19 +40,20 @@
                             <p>{{ object.instagram }}</p>
                             <p class="lead font-weight-bold">Products</p>
                             <p>{{ object.products }}</p>
-                        {% ifequal request.user.username object.reviewed_by.username  %}
-                            <button class="btn btn-green" id="approve" type="submit">{% trans "Approve" %}</button>
-                            <button class="btn btn-red" id="reject" type="submit">{% trans "Reject" %}</button>
-                        {% endifequal %}
+                            {% ifequal request.user.username object.reviewed_by.username %}
+                                <button class="btn btn-green" id="approve" type="submit">{% trans "Approve" %}</button>
+                                <button class="btn btn-red" id="reject" type="submit">{% trans "Reject" %}</button>
+                            {% endifequal %}
                             {% ifequal object.current_status 'open' %}
-                                    <button id="assign_btn" type="submit" class="btn btn-default">Mark as Assigned
-                                    </button>
+                                <button id="assign_btn" type="submit" class="btn btn-default">Mark as Assigned
+                                </button>
                             {% else %}
                                 {% ifnotequal object.reviewed_by.username request.user.username %}
                                     <button type="submit" disabled class="btn btn-grey">Assigned
                                         to {{ vendor.reviewed_by }} </button>
                                 {% endifnotequal %}
                             {% endifequal %}
+                            <a href="{% url 'vendor:summary' %}" class="btn btn-primary" role="button">Back</a>
                         </form>
                     </div>
 
