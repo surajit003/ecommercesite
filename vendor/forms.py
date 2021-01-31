@@ -9,4 +9,5 @@ class VendorForm(forms.ModelForm):
             "slug",
             "active",
             "admin_checked",
+            "reviewed_by",
         )

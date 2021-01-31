@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse
 from django.views.generic import CreateView, ListView, DetailView
 from .forms import VendorForm
 from .models import Vendor
-from django.http.response import JsonResponse, HttpResponse
+from django.http.response import JsonResponse
 
 
 # Create your views here.
