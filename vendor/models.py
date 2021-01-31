@@ -35,6 +35,11 @@ class Vendor(models.Model):
         verbose_name_plural = "Vendors"
         unique_together = ("first_name", "last_name", "company")
 
+    def __init__(self, *args, **kwargs):
+        print("vendorrr")
+        super(Vendor, self).__init__(*args, **kwargs)
+        self.__original_status = self.active
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = "{}-{}".format(self.first_name.lower(), self.last_name.lower())
@@ -45,3 +50,11 @@ class Vendor(models.Model):
 
     def get_absolute_url(self):
         return reverse("event:event_detail", args=[str(self.slug)])
+
+
+class VendorConfirmationCode(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    confirmation_code = models.CharField(max_length=220, db_index=True, unique=True)
+
+    def __str__(self):
+        return "{}-{}".format(self.vendor, self.confirmation_code)

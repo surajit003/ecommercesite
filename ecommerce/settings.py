@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     "order",
     "checkout",
     "payment",
-    "vendor",
+    "vendor.apps.VendorConfig",
     "buyer",
 ]
 

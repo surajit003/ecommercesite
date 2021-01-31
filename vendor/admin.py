@@ -11,3 +11,8 @@ class VendorAdmin(admin.ModelAdmin):
             "last_name",
         )
     }
+
+
+@admin.register(models.VendorConfirmationCode)
+class VendorConfirmationCodeAdmin(admin.ModelAdmin):
+    list_display = ("vendor", "confirmation_code")
