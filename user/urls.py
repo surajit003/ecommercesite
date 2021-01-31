@@ -19,4 +19,9 @@ urlpatterns = [
         views.CompanyDetailView.as_view(),
         name="company_detail",
     ),
+    url(
+        r"^signup/(?P<confirmation_token>[0-9a-f-]+)/$",
+        views.AccountSignupView.as_view(),
+        name="signup_view",
+    ),
 ]

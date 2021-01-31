@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import DetailView, ListView
 from .models import Company
 from .tasks import update_profile
 from catalog.models import Category
+from allauth.account.views import SignupView
+from vendor.models import VendorConfirmationCode
 
 # Create your views here.
 def ProfileView(request, profile_id):
@@ -43,3 +45,29 @@ class CompanyDetailView(DetailView):
         context = super(CompanyDetailView, self).get_context_data(**kwargs)
         context["category"] = Category.objects.all()
         return context
+
+
+class AccountSignupView(SignupView):
+    template_name = "account/signup.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountSignupView, self).get_context_data(**kwargs)
+        context["confirmation_token"] = self.kwargs.get("confirmation_token")
+        return context
+
+    def form_valid(self, form):
+        if self.kwargs.get("confirmation_token"):
+            try:
+                VendorConfirmationCode.objects.get(
+                    confirmation_code=self.kwargs.get("confirmation_token")
+                )
+                return super(AccountSignupView, self).form_valid(form)
+            except VendorConfirmationCode.DoesNotExist:
+                return redirect(
+                    reverse(
+                        "user:signup_view",
+                        kwargs={
+                            "confirmation_token": self.kwargs.get("confirmation_token")
+                        },
+                    )
+                )
