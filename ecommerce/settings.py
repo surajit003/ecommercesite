@@ -195,7 +195,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 X_FRAME_OPTIONS = "ALLOWALL"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-LOGIN_REDIRECT_URL = "/ecommerce/vendor/summary/"
+LOGIN_REDIRECT_URL = "/ecommerce/account/verify/user-type/"
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
 STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY")
 ACCOUNT_LOGOUT_REDIRECT_URL = "/ecommerce/accounts/login/"

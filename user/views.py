@@ -78,3 +78,10 @@ class AccountSignupView(SignupView):
                         },
                     )
                 )
+
+
+def check_user_type_and_redirect(request):
+    if request.user.is_superuser:
+        return redirect("vendor:summary")
+    else:
+        return redirect("user:company_list")

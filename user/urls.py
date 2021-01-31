@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
+
 from . import views
 
 app_name = "user"
@@ -23,5 +25,10 @@ urlpatterns = [
         r"^signup/(?P<confirmation_token>[0-9a-f-]+)/$",
         views.AccountSignupView.as_view(),
         name="signup_view",
+    ),
+    url(
+        r"^verify/user-type/$",
+        login_required(views.check_user_type_and_redirect),
+        name="verify_user_type",
     ),
 ]
