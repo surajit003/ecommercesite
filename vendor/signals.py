@@ -18,11 +18,7 @@ def send_email_to_vendor(sender, instance, **kwargs):
         if _:
             vendor.confirmation_code = code
             vendor.save()
-            signup_link = (
-                "127.0.0.1:8084/ecommerce/accounts/signup?confirmation_token={}".format(
-                    code
-                )
-            )
+            signup_link = "127.0.0.1:8084/ecommerce/account/signup/{}/".format(code)
             send_mail(
                 "Information about Registration ",
                 "Your application has been {}.To sign Up please follow the following link {}".format(

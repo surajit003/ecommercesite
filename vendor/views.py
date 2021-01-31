@@ -54,9 +54,7 @@ def mark_ticket_status(request):
     if request.method == "POST" and request.is_ajax():
         id = request.POST.get("id")
         status = request.POST.get("assign")
-        print("marjhhhhh", id, status, request.user)
         vendor = Vendor.objects.get(id=id)
-        print("vendor", vendor)
         vendor.current_status = status
         vendor.reviewed_by = request.user
         vendor.save()

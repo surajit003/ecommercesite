@@ -5,6 +5,7 @@ from .tasks import update_profile
 from catalog.models import Category
 from allauth.account.views import SignupView
 from vendor.models import VendorConfirmationCode
+from django.contrib import messages
 
 
 # Create your views here.
@@ -66,6 +67,9 @@ class AccountSignupView(SignupView):
                 vendor_code.save()
                 return super(AccountSignupView, self).form_valid(form)
             except VendorConfirmationCode.DoesNotExist:
+                messages.info(
+                    self.request, "Invalid Code or Already used for an existing account"
+                )
                 return redirect(
                     reverse(
                         "user:signup_view",

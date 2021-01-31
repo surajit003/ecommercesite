@@ -26,7 +26,7 @@ main = [
     url(r"^vendor/", include("vendor.urls")),
     url(r"^catalog/", include("catalog.urls")),
     url(r"^cart/", include("cart.urls")),
-    url(r"^profile/", include("user.urls")),
+    url(r"^account/", include("user.urls")),
     url(r"^order/", include("order.urls")),
     url(r"^checkout/", include("checkout.urls")),
     url(r"^accounts/", include("allauth.urls")),
