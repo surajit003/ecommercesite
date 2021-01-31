@@ -17,4 +17,9 @@ urlpatterns = [
         views.change_status_of_vendor,
         name="change-status",
     ),
+    url(
+        r"^assign/status/$",
+        views.mark_ticket_status,
+        name="ticket_status",
+    ),
 ]

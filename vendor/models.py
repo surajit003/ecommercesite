@@ -7,6 +7,11 @@ from django.conf import settings
 
 
 class Vendor(models.Model):
+    status = (
+        ("open", "open"),
+        ("taken", "taken"),
+        ("closed", "closed"),
+    )
     first_name = models.CharField(max_length=120, db_index=True)
     last_name = models.CharField(max_length=120, db_index=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
@@ -23,6 +28,7 @@ class Vendor(models.Model):
     reviewed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.PROTECT
     )
+    current_status = models.CharField(max_length=30, choices=status, default="open")
 
     class Meta:
         verbose_name = "Vendor"

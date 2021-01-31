@@ -10,4 +10,5 @@ class VendorForm(forms.ModelForm):
             "active",
             "admin_checked",
             "reviewed_by",
+            "current_status",
         )

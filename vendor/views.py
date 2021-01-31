@@ -24,7 +24,9 @@ class SummaryView(ListView):
     template_name = "vendor/summary.html"
 
     def get_queryset(self):
-        return Vendor.objects.filter(active=False, admin_checked=False)
+        return Vendor.objects.filter(active=False, admin_checked=False).exclude(
+            current_status="closed"
+        )
 
 
 class VendorDetail(DetailView):
@@ -43,6 +45,19 @@ def change_status_of_vendor(request):
         vendor = Vendor.objects.get(id=id)
         vendor.active = active
         vendor.admin_checked = True
+        vendor.reviewed_by = request.user
+        vendor.save()
+        return JsonResponse({"status": 204, "response": "Success"}, safe=False)
+
+
+def mark_ticket_status(request):
+    if request.method == "POST" and request.is_ajax():
+        id = request.POST.get("id")
+        status = request.POST.get("assign")
+        print("marjhhhhh", id, status, request.user)
+        vendor = Vendor.objects.get(id=id)
+        print("vendor", vendor)
+        vendor.current_status = status
         vendor.reviewed_by = request.user
         vendor.save()
         return JsonResponse({"status": 204, "response": "Success"}, safe=False)

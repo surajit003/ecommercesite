@@ -6,7 +6,9 @@
 
     <div class="table-responsive text-nowrap">
     <h2>Vendor List</h2>
-    <table class="table">
+    <form>
+        {% csrf_token %}
+    <table id="summary" class="table">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -22,6 +24,7 @@
         {% for vendor in vendor_list %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
+            <td><input type="hidden" value="{{ vendor.id }}" id="vendor_obj_id_{{ vendor.id }}"></td>
             <td>{{ vendor.first_name }}</td>
             <td>{{ vendor.last_name }}</td>
             <td>{{ vendor.company }}</td>
@@ -29,10 +32,21 @@
             <td>
                 <a href="{% url 'vendor:vendor_detail' vendor.slug %}">View more </a>
             </td>
+            {% ifequal vendor.current_status 'taken' %}
+         <td>
+                <button id="assign_btn" type="submit" class="btn btn-green"> Assigned to {{ vendor.reviewed_by }}</button>
+            </td>
+        {% else %}
+          <td>
+                <a href="" class="btn btn-secondary"> Open </a>
+            </td>
+        {% endifequal %}
+
         </tr>
         {% endfor %}
         </tbody>
     </table>
+    </form>
 
     </div>
 

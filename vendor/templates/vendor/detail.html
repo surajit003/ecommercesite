@@ -21,30 +21,38 @@
                             {% csrf_token %}
                             <p class="lead font-weight-bold">First Name</p>
                             <input type="hidden" value="{{ object.id }}" id="vendor_id">
-                        <p>{{ object.first_name }}</p>
-                        <p class="lead font-weight-bold">Last Name</p>
-                        <p>{{ object.last_name }}</p>
-                        <p class="lead font-weight-bold">Company</p>
-                        <p>{{ object.company }}</p>
-                        <p class="lead font-weight-bold">Contact Number</p>
-                        <p>{{ object.mobile_number }}</p>
-                        <p class="lead font-weight-bold">Email</p>
-                        <p>{{ object.email }}</p>
-                        <p class="lead font-weight-bold">Instagram</p>
-                        <p>{{ object.instagram }}</p>
-                        <p class="lead font-weight-bold">Business Type</p>
-                        <p>{{ object.business_type }}</p>
-                        <p class="lead font-weight-bold">Business Objectives</p>
-                        <p>{{ object.business_objectives }}</p>
-                        <p class="lead font-weight-bold">Instagram</p>
-                        <p>{{ object.instagram }}</p>
-                        <p class="lead font-weight-bold">Products</p>
-                        <p>{{ object.products }}</p>
-                        <button class="btn btn-default" id="approve" type="submit">{% trans "Approve" %}</button>
-                    <button class="btn btn-primary" id="reject" type="submit">{% trans "Reject" %}</button>
+                            <p>{{ object.first_name }}</p>
+                            <p class="lead font-weight-bold">Last Name</p>
+                            <p>{{ object.last_name }}</p>
+                            <p class="lead font-weight-bold">Company</p>
+                            <p>{{ object.company }}</p>
+                            <p class="lead font-weight-bold">Contact Number</p>
+                            <p>{{ object.mobile_number }}</p>
+                            <p class="lead font-weight-bold">Email</p>
+                            <p>{{ object.email }}</p>
+                            <p class="lead font-weight-bold">Instagram</p>
+                            <p>{{ object.instagram }}</p>
+                            <p class="lead font-weight-bold">Business Type</p>
+                            <p>{{ object.business_type }}</p>
+                            <p class="lead font-weight-bold">Business Objectives</p>
+                            <p>{{ object.business_objectives }}</p>
+                            <p class="lead font-weight-bold">Instagram</p>
+                            <p>{{ object.instagram }}</p>
+                            <p class="lead font-weight-bold">Products</p>
+                            <p>{{ object.products }}</p>
+                        {% ifequal request.user.username object.reviewed_by.username  %}
+                            <button class="btn btn-green" id="approve" type="submit">{% trans "Approve" %}</button>
+                            <button class="btn btn-red" id="reject" type="submit">{% trans "Reject" %}</button>
+                        {% endifequal %}
+                            {% ifequal object.current_status 'open' %}
+                                    <button id="assign_btn" type="submit" class="btn btn-default">Mark as Assigned
+                                    </button>
+                            {% else %}
+                                    <button type="submit" disabled class="btn btn-grey">Assigned
+                                        to {{ vendor.reviewed_by }} </button>
+                            {% endifequal %}
                         </form>
                     </div>
-                    <!--Content-->
 
                 </div>
                 <!--Grid column-->
