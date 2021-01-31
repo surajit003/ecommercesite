@@ -66,7 +66,6 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "user.middleware.CheckUserhasAlreadyAddedCompany",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
@@ -196,7 +195,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 X_FRAME_OPTIONS = "ALLOWALL"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-LOGIN_REDIRECT_URL = "/ecommerce/account/company/all"
+LOGIN_REDIRECT_URL = "/ecommerce/vendor/summary/"
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
 STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY")
 ACCOUNT_LOGOUT_REDIRECT_URL = "/ecommerce/accounts/login/"

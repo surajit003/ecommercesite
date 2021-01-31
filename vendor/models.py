@@ -3,6 +3,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.urls import reverse
 from django.conf import settings
 
+
 # Create your models here.
 
 
@@ -42,7 +43,10 @@ class Vendor(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = "{}-{}".format(self.first_name.lower(), self.last_name.lower())
+            self.slug = "{}-{}".format(
+                self.first_name.lower().replace(" ", "-"),
+                self.last_name.lower().replace(" ", "-"),
+            )
         return super(Vendor, self).save(*args, **kwargs)
 
     def __str__(self):
