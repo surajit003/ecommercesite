@@ -48,8 +48,10 @@
                                     <button id="assign_btn" type="submit" class="btn btn-default">Mark as Assigned
                                     </button>
                             {% else %}
+                                {% ifnotequal object.reviewed_by.username request.user.username %}
                                     <button type="submit" disabled class="btn btn-grey">Assigned
                                         to {{ vendor.reviewed_by }} </button>
+                                {% endifnotequal %}
                             {% endifequal %}
                         </form>
                     </div>

@@ -30,7 +30,7 @@
             <td>{{ vendor.company }}</td>
             <td>{{ vendor.mobile_number }}</td>
             <td>
-                <a href="{% url 'vendor:vendor_detail' vendor.slug %}">View more </a>
+                <a href="{% url 'vendor:vendor_detail' vendor.slug %}"> <span class="badge badge-primary">View more</span> </a>
             </td>
             {% ifequal vendor.current_status 'taken' %}
          <td>
