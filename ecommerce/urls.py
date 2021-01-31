@@ -23,6 +23,7 @@ import debug_toolbar
 app_name = "ecommerce"
 main = [
     url(r"^admin/", admin.site.urls),
+    url(r"^vendor/", include("vendor.urls")),
     url(r"^catalog/", include("catalog.urls")),
     url(r"^cart/", include("cart.urls")),
     url(r"^profile/", include("user.urls")),

@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.views.generic import DetailView, ListView
+from .models import Company
 from .tasks import update_profile
-
+from catalog.models import Category
 
 # Create your views here.
 def ProfileView(request, profile_id):
@@ -16,7 +18,28 @@ def ProfileView(request, profile_id):
                 role = "VE"
             if buyer:
                 role = "BU"
-            update_profile.delay(profile_id, company_name, phone_number, role)
+            update_profile(profile_id, company_name, phone_number, role)
         except Exception as ex:
             return redirect("user:profile", profile_id=profile_id)
-        return redirect("catalog:product_list")
+        return redirect("user:company_list")
+
+
+class CompanyListView(ListView):
+    model = Company
+    template_name = "catalog/company.html"
+
+    def get_context_data(self, **kwargs):
+        print("got here")
+        context = super(CompanyListView, self).get_context_data(**kwargs)
+        context["category"] = Category.objects.all()
+        return context
+
+
+class CompanyDetailView(DetailView):
+    model = Company
+    template_name = "catalog/company_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(CompanyDetailView, self).get_context_data(**kwargs)
+        context["category"] = Category.objects.all()
+        return context

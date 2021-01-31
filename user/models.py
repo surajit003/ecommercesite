@@ -1,8 +1,9 @@
 from django.db import models
 from django.conf import settings
+from django_resized import ResizedImageField
 from phonenumber_field.modelfields import PhoneNumberField
 import uuid
-
+from django.urls import reverse
 
 # Create your models here.
 class Company(models.Model):
@@ -13,9 +14,18 @@ class Company(models.Model):
         help_text="Unique value for company URL, created from name.",
     )
     active = models.BooleanField(default=True)
+    image = ResizedImageField(size=[120, 120], quality=75)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    def get_thumbnail(self):
+        thumbnail = self.image.url
+        return thumbnail
+
+    def get_absolute_url(self):
+        return reverse("user:company_detail", args=[str(self.slug)])
 
     class Meta:
         verbose_name_plural = "Companies"

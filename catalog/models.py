@@ -5,6 +5,19 @@ from django_resized import ResizedImageField
 from django.conf import settings
 
 
+class CategoryQueryset(models.QuerySet):
+    def name(self, name):
+        return self.filter(name=name)
+
+
+class CategoryManager(models.Manager):
+    def get_queryset(self):
+        return CategoryQueryset(self.model, using=self._db)
+
+    def published(self, name):
+        return self.get_queryset().name(name)
+
+
 class Category(TimeStampedModel):
     name = models.CharField(max_length=50)
     slug = models.SlugField(
@@ -23,6 +36,9 @@ class Category(TimeStampedModel):
         "Meta Description", max_length=255, help_text="Content for description meta tag"
     )
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    objects = models.Manager()  # The default manager.
+
+    category_manager = CategoryManager()  # The useroffer manager.
 
     class Meta:
         db_table = "categories"

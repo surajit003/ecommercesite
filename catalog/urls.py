@@ -19,4 +19,9 @@ urlpatterns = [
         views.ProductList.as_view(),
         name="product_list",
     ),
+    url(
+        r"^product/(?P<slug>[\w-]+)/list/$",
+        views.ProductListByCompany.as_view(),
+        name="product_list_by_company",
+    ),
 ]
