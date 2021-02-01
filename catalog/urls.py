@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
+
 from . import views
 
 app_name = "catalog"
@@ -23,5 +25,10 @@ urlpatterns = [
         r"^product/(?P<slug>[\w-]+)/list/$",
         views.ProductListByCompany.as_view(),
         name="product_list_by_company",
+    ),
+    url(
+        r"^index/$",
+        login_required(views.Index),
+        name="index",
     ),
 ]

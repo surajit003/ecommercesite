@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 from .models import Product, Category
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -73,3 +74,7 @@ class ProductListByCompany(LoginRequiredMixin, ListView):
                 category_list.append(category)
         context["category_list"] = category_list
         return context
+
+
+def Index(request):
+    return render(request, "catalog/new_core/index.html")
