@@ -134,10 +134,11 @@ class ProductUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return super().form_invalid(form)
 
 
-class ProductDelete(DeleteView):
+class ProductDelete(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     # specify the model you want to use
     model = Product
     template_name = "catalog/product/delete_product.html"
+    success_message = "Product Deleted Successfully"
 
     def get_success_url(self):
         return reverse("catalog:product_list")
