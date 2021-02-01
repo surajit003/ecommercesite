@@ -60,11 +60,8 @@ class Product(TimeStampedModel):
         help_text="Unique value for product page URL, created from name.",
     )
     brand = models.CharField(max_length=50)
-    sku = models.CharField(max_length=50)
+    sku = models.CharField(max_length=50, unique=True, db_index=True)
     price = models.DecimalField(max_digits=9, decimal_places=2)
-    old_price = models.DecimalField(
-        max_digits=9, decimal_places=2, blank=True, default=0.00
-    )
     is_active = models.BooleanField(default=True)
     is_bestseller = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
@@ -99,12 +96,6 @@ class Product(TimeStampedModel):
 
     def get_remove_from_cart_url(self):
         return reverse("cart:remove_from_cart", args=[str(self.slug)])
-
-    def sale_price(self):
-        if self.old_price > self.price:
-            return self.price
-        else:
-            return self.old_price
 
     def get_categories(self):
         categories = []
