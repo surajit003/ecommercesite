@@ -31,4 +31,9 @@ urlpatterns = [
         login_required(views.Index),
         name="index",
     ),
+    url(
+        r"^product/create/$",
+        views.CreatProduct.as_view(),
+        name="product_create",
+    ),
 ]

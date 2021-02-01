@@ -1,9 +1,9 @@
-from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Vendor, VendorConfirmationCode
 import uuid
 from django.conf import settings
+from .tasks import trigger_email
 
 
 @receiver(post_save, sender=Vendor)
@@ -28,10 +28,4 @@ def send_email_to_vendor(sender, instance, **kwargs):
         if _:
             vendor.confirmation_code = code
             vendor.save()
-            send_mail(
-                "Information about Registration ",
-                msg_body,
-                "surajit.das0320@gmail.com",
-                [instance.email],
-                fail_silently=False,
-            )
+            trigger_email.delay(msg_body, instance)

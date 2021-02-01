@@ -5,6 +5,10 @@ from .models import Product
 class ProductAdminForm(forms.ModelForm):
     class Meta:
         model = Product
+        exclude = (
+            "created_by",
+            "slug",
+        )
 
     def clean_price(self):
         if self.cleaned_data["price"] <= 0:
