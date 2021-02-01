@@ -36,6 +36,9 @@ class ProductList(LoginRequiredMixin, ListView):
     template_name = "catalog/product/list_products.html"
     login_url = "/ecommerce/accounts/login"
 
+    def get_queryset(self):
+        return Product.objects.filter(created_by=self.request.user)
+
     def get_context_data(self, **kwargs):
         context = super(ProductList, self).get_context_data(**kwargs)
         context["category"] = Category.objects.all()
@@ -94,7 +97,7 @@ class CreatProduct(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     error_message = "Error saving the Doc, check fields below."
 
     def get_success_url(self):
-        return reverse("catalog:product_create")
+        return reverse("catalog:product_list")
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -117,7 +120,7 @@ class ProductUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     error_message = "Error saving the Doc, check fields below."
 
     def get_success_url(self):
-        return reverse("catalog:product_create")
+        return reverse("catalog:product_list")
 
     def form_valid(self, form):
         obj = form.save(commit=False)
