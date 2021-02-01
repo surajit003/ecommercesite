@@ -10,20 +10,24 @@ def send_email_to_vendor(sender, instance, **kwargs):
     if instance.active != instance._Vendor__original_status:
         # something has changed in the active field
         code = uuid.uuid4()
+        signup_link = "127.0.0.1:8084/ecommerce/account/signup/{}/".format(code)
         if instance.active:
             status = "Approved"
+            msg_body = "Your application has been {}.To sign Up please follow the following link {}".format(
+                status, signup_link
+            )
         else:
             status = "Declined"
+            msg_body = "Your application has been {}.Please reach out to us for any enquiries".format(
+                status, "support@test.com"
+            )
         vendor, _ = VendorConfirmationCode.objects.get_or_create(vendor=instance)
         if _:
             vendor.confirmation_code = code
             vendor.save()
-            signup_link = "127.0.0.1:8084/ecommerce/account/signup/{}/".format(code)
             send_mail(
                 "Information about Registration ",
-                "Your application has been {}.To sign Up please follow the following link {}".format(
-                    status, signup_link
-                ),
+                msg_body,
                 "surajit.das0320@gmail.com",
                 [instance.email],
                 fail_silently=False,
