@@ -38,7 +38,7 @@ class Category(TimeStampedModel):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     objects = models.Manager()  # The default manager.
 
-    category_manager = CategoryManager()  # The useroffer manager.
+    category_manager = CategoryManager()
 
     class Meta:
         db_table = "categories"
@@ -67,12 +67,6 @@ class Product(TimeStampedModel):
     is_featured = models.BooleanField(default=False)
     quantity = models.IntegerField()
     description = models.TextField()
-    meta_keywords = models.CharField(
-        max_length=255, help_text="Comma-delimited set of SEO keywords for meta tag"
-    )
-    meta_description = models.CharField(
-        max_length=255, help_text="Content for description meta tag"
-    )
     categories = models.ManyToManyField(Category)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image_one = models.ImageField(upload_to="images/")
