@@ -78,6 +78,11 @@ class Product(TimeStampedModel):
     )
     categories = models.ManyToManyField(Category)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image_one = models.ImageField(upload_to="images/")
+    image_two = models.ImageField(blank=True, null=True, upload_to="images/")
+    image_three = models.ImageField(blank=True, null=True, upload_to="images/")
+    image_four = models.ImageField(blank=True, null=True, upload_to="images/")
+    image_five = models.ImageField(blank=True, null=True, upload_to="images/")
 
     class Meta:
         db_table = "products"

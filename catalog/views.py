@@ -1,10 +1,13 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import DetailView, ListView, CreateView
 from .models import Product, Category
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.models import UserProfile
 from .forms import ProductAdminForm
 from django.contrib import messages
+
 
 # Create your views here.
 
@@ -82,19 +85,22 @@ def Index(request):
     return render(request, "catalog/new_core/index.html")
 
 
-class CreatProduct(CreateView):
+class CreatProduct(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Product
     form_class = ProductAdminForm
     template_name = "catalog/product/add_product.html"
-    success_url = "/ecommerce/catalog/product/create/"
     success_message = "%(name)s was created successfully"
     error_message = "Error saving the Doc, check fields below."
+
+    def get_success_url(self):
+        return reverse("catalog:product_create")
 
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.created_by = self.request.user
         obj.slug = form.cleaned_data["name"].lower().replace(" ", "-")
         obj.save()
+        messages.error(self.request, self.success_message)
         return super(CreatProduct, self).form_valid(form)
 
     def form_invalid(self, form):
