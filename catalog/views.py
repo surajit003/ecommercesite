@@ -1,5 +1,5 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import (
     DetailView,
@@ -83,7 +83,7 @@ class ProductListByCompany(LoginRequiredMixin, ListView):
 
 
 def Index(request):
-    return render(request, "catalog/new_core/index.html")
+    return redirect(reverse("catalog:product_list"))
 
 
 class CreatProduct(LoginRequiredMixin, SuccessMessageMixin, CreateView):
