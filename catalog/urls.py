@@ -8,17 +8,17 @@ app_name = "catalog"
 urlpatterns = [
     url(
         r"^product/(?P<slug>[\w-]+)/detail/$",
-        views.ProductDetailView.as_view(),
+        login_required(views.ProductDetailView.as_view()),
         name="product_detail",
     ),
     url(
         r"^category/(?P<slug>[\w-]+)$",
-        views.CategoryDetailView.as_view(),
+        login_required(views.CategoryDetailView.as_view()),
         name="category_detail",
     ),
     url(
         r"^product/list/$",
-        views.ProductListView.as_view(),
+        login_required(views.ProductListView.as_view()),
         name="product_list",
     ),
     url(
@@ -33,17 +33,17 @@ urlpatterns = [
     ),
     url(
         r"^product/create/$",
-        views.ProductCreateView.as_view(),
+        login_required(views.ProductCreateView.as_view()),
         name="product_create",
     ),
     url(
         r"^product/(?P<slug>[\w-]+)/update/$",
-        views.ProductUpdateView.as_view(),
+        login_required(views.ProductUpdateView.as_view()),
         name="product_update",
     ),
     url(
         r"^product/(?P<slug>[\w-]+)/delete/$",
-        views.ProductDeleteView.as_view(),
+        login_required(views.ProductDeleteView.as_view()),
         name="product_delete",
     ),
 ]
