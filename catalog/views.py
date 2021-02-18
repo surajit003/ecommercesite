@@ -83,10 +83,8 @@ class ProductListByCompany(LoginRequiredMixin, ListView):
         category_list = []
         if self.kwargs.get("slug"):
             profile = UserProfile.objects.filter(company__slug=self.kwargs.get("slug"))
-            print("prpfi", profile)
             for p in profile:
                 category = Category.objects.filter(created_by=p.user)
-                print("p", category)
                 category_list.append(category)
         context["category_list"] = category_list
         return context
