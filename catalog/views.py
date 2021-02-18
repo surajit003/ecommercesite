@@ -1,4 +1,5 @@
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import (
@@ -40,7 +41,7 @@ class ProductListView(LoginRequiredMixin, ListView):
         query = self.request.GET.get("q")
         if query:
             object_list = self.model.objects.filter(
-                name__icontains=query, created_by=self.request.user
+                Q(name__icontains=query) | Q(sku=query), created_by=self.request.user
             )
         else:
             object_list = self.model.objects.filter(created_by=self.request.user)
