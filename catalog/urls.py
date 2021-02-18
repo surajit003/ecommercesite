@@ -8,7 +8,7 @@ app_name = "catalog"
 urlpatterns = [
     url(
         r"^product/(?P<slug>[\w-]+)/detail/$",
-        views.ProductDetail.as_view(),
+        views.ProductDetailView.as_view(),
         name="product_detail",
     ),
     url(
@@ -18,7 +18,7 @@ urlpatterns = [
     ),
     url(
         r"^product/list/$",
-        views.ProductList.as_view(),
+        views.ProductListView.as_view(),
         name="product_list",
     ),
     url(
@@ -33,17 +33,17 @@ urlpatterns = [
     ),
     url(
         r"^product/create/$",
-        views.CreatProduct.as_view(),
+        views.ProductCreateView.as_view(),
         name="product_create",
     ),
     url(
         r"^product/(?P<slug>[\w-]+)/update/$",
-        views.ProductUpdate.as_view(),
+        views.ProductUpdateView.as_view(),
         name="product_update",
     ),
     url(
         r"^product/(?P<slug>[\w-]+)/delete/$",
-        views.ProductDelete.as_view(),
+        views.ProductDeleteView.as_view(),
         name="product_delete",
     ),
 ]

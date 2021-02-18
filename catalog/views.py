@@ -1,5 +1,5 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import (
     DetailView,
@@ -11,7 +11,7 @@ from django.views.generic import (
 from .models import Product, Category
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.models import UserProfile
-from .forms import ProductAdminForm
+from .forms import ProductForm
 from django.contrib import messages
 
 
@@ -30,7 +30,7 @@ class CategoryDetailView(DetailView):
         return context
 
 
-class ProductList(LoginRequiredMixin, ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     paginate_by = 10
     template_name = "catalog/product/list_products.html"
@@ -47,12 +47,12 @@ class ProductList(LoginRequiredMixin, ListView):
         return object_list
 
     def get_context_data(self, **kwargs):
-        context = super(ProductList, self).get_context_data(**kwargs)
+        context = super(ProductListView, self).get_context_data(**kwargs)
         context["category"] = Category.objects.all()
         return context
 
 
-class ProductDetail(DetailView):
+class ProductDetailView(DetailView):
     model = Product
     template_name = "catalog/product/view_product.html"
 
@@ -96,9 +96,9 @@ def Index(request):
     return redirect(reverse("catalog:product_list"))
 
 
-class CreatProduct(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Product
-    form_class = ProductAdminForm
+    form_class = ProductForm
     template_name = "catalog/product/add_product.html"
     success_message = "Product was created successfully"
     error_message = "Error saving the Doc, check fields below."
@@ -111,17 +111,17 @@ class CreatProduct(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         obj.created_by = self.request.user
         obj.slug = form.cleaned_data["name"].lower().replace(" ", "-")
         obj.save()
-        return super(CreatProduct, self).form_valid(form)
+        return super(ProductCreateView, self).form_valid(form)
 
     def form_invalid(self, form):
         messages.error(self.request, self.error_message)
         return super().form_invalid(form)
 
 
-class ProductUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     # specify the model you want to use
     model = Product
-    form_class = ProductAdminForm
+    form_class = ProductForm
     template_name = "catalog/product/update_product.html"
     success_message = "Product was updated successfully"
     error_message = "Error saving the Doc, check fields below."
@@ -134,14 +134,14 @@ class ProductUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         obj.created_by = self.request.user
         obj.slug = form.cleaned_data["name"].lower().replace(" ", "-")
         obj.save()
-        return super(ProductUpdate, self).form_valid(form)
+        return super(ProductUpdateView, self).form_valid(form)
 
     def form_invalid(self, form):
         messages.error(self.request, self.error_message)
         return super().form_invalid(form)
 
 
-class ProductDelete(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     # specify the model you want to use
     model = Product
     template_name = "catalog/product/delete_product.html"
@@ -149,15 +149,3 @@ class ProductDelete(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("catalog:product_list")
-
-
-class ProductSearch(ListView):
-    template_name = "catalog/product/list_products.html"
-    model = Product
-
-    def get_queryset(self):
-        name = self.kwargs.get("name", "")
-        object_list = self.model.objects.all()
-        if name:
-            object_list = object_list.filter(name__icontains=name)
-        return object_list
