@@ -37,7 +37,14 @@ class ProductList(LoginRequiredMixin, ListView):
     login_url = "/ecommerce/accounts/login"
 
     def get_queryset(self):
-        return Product.objects.filter(created_by=self.request.user)
+        query = self.request.GET.get("q")
+        if query:
+            object_list = self.model.objects.filter(
+                name__icontains=query, created_by=self.request.user
+            )
+        else:
+            object_list = self.model.objects.filter(created_by=self.request.user)
+        return object_list
 
     def get_context_data(self, **kwargs):
         context = super(ProductList, self).get_context_data(**kwargs)
@@ -142,3 +149,15 @@ class ProductDelete(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("catalog:product_list")
+
+
+class ProductSearch(ListView):
+    template_name = "catalog/product/list_products.html"
+    model = Product
+
+    def get_queryset(self):
+        name = self.kwargs.get("name", "")
+        object_list = self.model.objects.all()
+        if name:
+            object_list = object_list.filter(name__icontains=name)
+        return object_list
